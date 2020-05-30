@@ -1,0 +1,95 @@
+.icon-class{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 18px;
+    color: gray;
+}
+
+.select-class{
+    border: gray solid 1px;
+    outline: none;
+    border-radius: 5px;
+    margin: 4px 2px;
+}
+
+.change-color-menu{
+    display: flex;
+    color: green;
+    position: absolute;
+    top: 40px;
+    border-radius: 5px;
+    border: solid gray 1px;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0 2px;
+    height: 28px;
+}
+
+.change-color-menu button{
+    margin: 0 2px;
+    width: 20px;
+    height: 20px;
+    border-radius: 5px;
+    padding: 0;
+    cursor: pointer;
+    border: solid 1px black;
+}
+
+/* 菜单栏的选色块 */
+.change-color-red{
+    background-color: red;
+}
+.change-color-yellow{
+    background-color: yellow;
+}
+.change-color-green{
+    background-color: green;
+}
+.change-color-black{
+    background-color: black;
+}
+.change-color-blue{
+    background-color: blue;
+}
+.change-color-white{
+    background-color: white;
+   
+}
+.change-color-skyblue{
+    background-color: skyblue;
+    
+}
+
+.emotion-menu-class{
+    display: flex;
+    position: absolute;
+    border: gray 1px solid;
+    border-radius: 5px;
+    flex-wrap: wrap;
+    width: 140px;
+    top: 40px;
+    background-color: #f6f6f6;
+    overflow: hidden;
+    box-sizing: border-box;
+    justify-content: center;
+
+}
+
+.emotion-menu-item-class{
+    width: 28px;
+    height: 28px;
+    background-color: #ffffff;
+    margin: 2px;
+    border: gray 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+*{
+    outline: none;
+}
