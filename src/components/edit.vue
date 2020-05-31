@@ -81,11 +81,32 @@
       <!-- 取消缩进 -->
       <div class="icon-indent-decrease icon-class" @click="textOutdent"></div>
       <!-- 图片 -->
-      <div class="icon-image icon-class"></div>
+      <div>
+        <div class="icon-image icon-class" @click="showImgeMenu"></div>
+        <div class="image-menu" v-show="isShowImgeMenu">
+          <input id="uploadimg" type="file" accept="image/*" >
+          <div class="image-menu-set-size">
+            <label for="image-width">
+              宽度
+              <input class="imge-size" name="image-width" type="text" v-model="imgSize.width" placeholder="200">
+              px
+            </label>
+            
+            <label for="imge-height">
+              高度
+              <input class="imge-size" name="image-height" type="text" v-model="imgSize.heigth" placeholder="200">
+              px
+              </label>
+            
+          </div>
+          <button @click="uploadImg">添加图片</button>
+        </div>
+      </div>
+
       <!-- 表情 -->
       <div>
         <div class="icon-happy icon-class" @click="showEmotionMenu"></div>
-        <div class="emotion-menu-class" v-show="isShowEmotionMunu">
+        <div class="emotion-menu-class" v-show="isShowEmotionMenu">
           <img
             v-for="item in emotionPngSrc"
             :key="item"
@@ -106,17 +127,24 @@
 </template>
 
 <script>
+
 export default {
   name: "edit",
   data() {
     return {
+      //静态资源路径
       publicPath: process.env.BASE_URL,
+
+      //设置默认的字体
       selectFontFamily: "YaHei",
       selectFontSize: "3",
       selectHead: "p",
+
+      //显示颜色，背景，表情，插入图片的菜单
       isChangeColorMenu: false,
       isChangeBackgroundColorMenu: false,
-      isShowEmotionMunu: false,
+      isShowEmotionMenu: false,
+      isShowImgeMenu:false,
       //文字颜色菜单里的块颜色
       fontIconMenuColorBlock: [
         "change-color-red",
@@ -144,7 +172,13 @@ export default {
         "/emotion/fearful.png",
         "/emotion/heart_eyes.png"
       ],
-      fullScreen: "icon-enlarge"
+      //全屏的图标样式
+      fullScreen: "icon-enlarge",
+      //插入的图片大小设置
+      imgSize:{
+        width:200,
+        height:200
+      }
     };
   },
   watch: {
@@ -377,7 +411,7 @@ export default {
 
     //显示表情菜单
     showEmotionMenu() {
-      this.isShowEmotionMunu = !this.isShowEmotionMunu;
+      this.isShowEmotionMenu = !this.isShowEmotionMenu;
     },
 
     //插入表情
@@ -391,18 +425,45 @@ export default {
       if (!document.fullscreenElement) {
         this.fullScreen = "icon-shrink";
         fullscr.requestFullscreen();
-      } else { 
+      } else {
         this.fullScreen = "icon-enlarge";
-        document.mozCancelFullScreen(); 
+        document.mozCancelFullScreen();
       }
       //细节：解决按esc屏幕图标不会变化问题
-      window.addEventListener('fullscreenchange',event =>{
-        if(!document.fullscreenElement){//如果处于非全屏状态，图标显示放大
+      window.addEventListener("fullscreenchange", event => {
+        if (!document.fullscreenElement) {
+          //如果处于非全屏状态，图标显示放大
           this.fullScreen = "icon-enlarge";
         }
-      })
-
+      });
+    },
+    //显示图片菜单
+    showImgeMenu(){
+      this.isShowImgeMenu = !this.isShowImgeMenu;
+    },
+    //插入图片
+    uploadImg() {
+      let fileObj = document.getElementById("uploadimg").files[0];
+      let [imgWidth,imgHeight] = [this.imgSize.width,this.imgSize.height];
+      if (fileObj) {
+        let file = new FileReader();
+        file.readAsDataURL(fileObj);
+        file.onload = function() {
+          let imgData = this.result;
+          let range = document.getSelection().getRangeAt(0);
+          let imgDOM = document.createElement("img");
+          imgDOM.src = imgData;
+          imgDOM.style.width = imgWidth + "px";
+          imgDOM.style.height = imgHeight + "px";
+          range.surroundContents(imgDOM);
+        };
+        this.isShowImgeMenu = false;
+      } else {
+        alert("请选择图片");
+      }
     }
+    //保存
+
   }
 };
 </script>

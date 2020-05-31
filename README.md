@@ -2,7 +2,7 @@
 
 ### 下载
 ```
-
+git clone https://github.com/zidahong/MEditor.git
 ```
 
 ### 安装
